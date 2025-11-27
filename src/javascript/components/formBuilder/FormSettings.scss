@@ -66,6 +66,35 @@
   border-radius: 4px;
   padding: 8px;
 
+  .lexical-toolbar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e0e0e0;
+
+    .lexical-toolbar-button {
+      padding: 4px 8px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+      min-width: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background: #f5f5f5;
+      }
+
+      &:active {
+        background: #e0e0e0;
+      }
+    }
+  }
+
   .lexical-content-editable {
     outline: none;
     min-height: 80px;

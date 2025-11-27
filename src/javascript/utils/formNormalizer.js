@@ -147,6 +147,7 @@ export const normalizeForm = node => {
 
     const intro = getPropertyValue(node.properties || [], 'intro') || '';
     const title = getPropertyValue(node.properties || [], 'jcr:title') || node.displayName || node.name;
+    const properties = propertiesToObject(node.properties || []);
 
     const directStepNodes = ((node.children || {}).nodes || []).filter(isFieldsetNode);
     const containerNodes = ((node.fieldsetsContainers || {}).nodes || []);
@@ -161,6 +162,7 @@ export const normalizeForm = node => {
         path: node.path,
         label: title,
         intro,
+        properties,
         steps,
         fieldsetsPath
     };

@@ -8,6 +8,7 @@ import {useQuery, useMutation} from '@apollo/client';
 import {LexicalComposer} from '@lexical/react/LexicalComposer';
 import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
+import {FORMAT_TEXT_COMMAND} from 'lexical';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import {$generateHtmlFromNodes, $generateNodesFromDOM} from '@lexical/html';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
@@ -18,7 +19,44 @@ import {GET_FORM_DETAILS} from '../../graphql/queries';
 import {UPDATE_FORM_METADATA_MUTATION, UPDATE_FORM_MIXIN_RESPONSES_MUTATION, UPDATE_FORM_MIXIN_BUTTONS_MUTATION, UPDATE_FORM_MIXIN_ACTIONS_MUTATION, UPDATE_FORM_MIXIN_STYLE_MUTATION} from '../../graphql/mutations';
 import './FormSettings.scss';
 
-// Plugin to set content after editor is mounted
+// Simple Toolbar Component
+const Toolbar = () => {
+    const [editor] = useLexicalComposerContext();
+
+    const formatText = formatType => {
+        editor.dispatchCommand(FORMAT_TEXT_COMMAND, formatType);
+    };
+
+    return (
+        <div className="lexical-toolbar">
+            <button
+                type="button"
+                className="lexical-toolbar-button"
+                title="Bold"
+                onClick={() => formatText('bold')}
+            >
+                <strong>B</strong>
+            </button>
+            <button
+                type="button"
+                className="lexical-toolbar-button"
+                title="Italic"
+                onClick={() => formatText('italic')}
+            >
+                <em>I</em>
+            </button>
+            <button
+                type="button"
+                className="lexical-toolbar-button"
+                title="Underline"
+                onClick={() => formatText('underline')}
+            >
+                <u>U</u>
+            </button>
+        </div>
+    );
+};
+
 const ContentSetterPlugin = ({value}) => {
     const [editor] = useLexicalComposerContext();
     const hasSetInitialContentRef = useRef(false);
@@ -37,67 +75,39 @@ const ContentSetterPlugin = ({value}) => {
                 window._isSettingLexicalContent = true;
 
                 editor.update(() => {
-                    try {
-                        console.log('ContentSetterPlugin: setting content:', value);
-                        $getRoot().clear();
+                    console.log('ContentSetterPlugin: setting content:', value);
+                    $getRoot().clear();
 
-                        if (value && value.trim()) {
-                            // Parse HTML content using a temporary div
-                            console.log('ContentSetterPlugin: parsing HTML content:', value);
-                            const tempDiv = document.createElement('div');
-                            tempDiv.innerHTML = value;
-                            console.log('ContentSetterPlugin: tempDiv children:', tempDiv.children.length);
-
-                            // Try generating nodes from each child individually
-                            const nodes = [];
-                            for (const child of tempDiv.children) {
-                                console.log('ContentSetterPlugin: processing child:', child);
-                                const childNodes = $generateNodesFromDOM(editor, child);
-                                console.log('ContentSetterPlugin: child generated nodes:', childNodes.length);
-                                nodes.push(...childNodes);
-                            }
-
-                            console.log('ContentSetterPlugin: total generated nodes:', nodes.length);
-
+                    if (value && value.trim()) {
+                        // Parse HTML content using Lexical's proper HTML import method
+                        console.log('ContentSetterPlugin: parsing HTML content:', value);
+                        try {
+                            const parser = new DOMParser();
+                            const dom = parser.parseFromString(value, 'text/html');
+                            const nodes = $generateNodesFromDOM(editor, dom);
+                            console.log('ContentSetterPlugin: generated nodes:', nodes.length);
                             for (const node of nodes) {
-                                console.log('ContentSetterPlugin: appending node:', node);
                                 $getRoot().append(node);
                             }
-
-                            // If no nodes were generated, try manual creation as fallback
-                            if (nodes.length === 0 && tempDiv.children.length > 0) {
-                                console.log('ContentSetterPlugin: fallback - manual node creation');
-                                for (const child of tempDiv.children) {
-                                    console.log('ContentSetterPlugin: creating paragraph for child:', child);
-                                    const paragraph = $createParagraphNode();
-                                    paragraph.append($createTextNode(child.textContent || ''));
-                                    $getRoot().append(paragraph);
-                                }
-                            }
+                        } catch (error) {
+                            console.error('ContentSetterPlugin: error parsing HTML:', error);
+                            // Fallback to plain text
+                            const paragraphNode = $createParagraphNode();
+                            const textNode = $createTextNode(value);
+                            $getRoot().append(paragraphNode);
+                            paragraphNode.append(textNode);
                         }
-
-                        console.log('ContentSetterPlugin: content set successfully');
-                        hasSetInitialContentRef.current = true;
-
-                        // Clear the flag after a short delay
-                        setTimeout(() => {
-                            window._isSettingLexicalContent = false;
-                        }, 50);
-                    } catch (error) {
-                        console.error('ContentSetterPlugin: error setting content:', error);
-                        // Fallback to plain text
-                        $getRoot().clear();
-                        const paragraphNode = $createParagraphNode();
-                        const textNode = $createTextNode(value || '');
-                        paragraphNode.append(textNode);
-                        $getRoot().append(paragraphNode);
-                        hasSetInitialContentRef.current = true;
-
-                        // Clear the flag
-                        setTimeout(() => {
-                            window._isSettingLexicalContent = false;
-                        }, 50);
+                    } else {
+                        console.log('ContentSetterPlugin: no value to set or empty value:', value);
                     }
+
+                    console.log('ContentSetterPlugin: content set successfully');
+                    hasSetInitialContentRef.current = true;
+
+                    // Clear the flag after a short delay
+                    setTimeout(() => {
+                        window._isSettingLexicalContent = false;
+                    }, 50);
                 });
             }, 100);
 
@@ -148,17 +158,19 @@ const LexicalEditor = ({value, onChange, placeholder, height = 120}) => {
     console.log('LexicalEditor: rendering with value:', value, 'type:', typeof value);
 
     const initialConfig = {
-        namespace: 'FormidableEditor'
+        namespace: 'FormidableEditor',
+        onError: error => console.error('Lexical error:', error)
     };
 
     return (
         <div className="lexical-editor" style={{minHeight: height}}>
             <LexicalComposer initialConfig={initialConfig}>
+                <Toolbar/>
                 <RichTextPlugin
                     contentEditable={
                         <ContentEditable
                             className="lexical-content-editable"
-                            style={{minHeight: height - 40}}
+                            style={{minHeight: height - 60}}
                         />
                     }
                     placeholder={<div className="lexical-placeholder">{placeholder}</div>}
@@ -215,7 +227,7 @@ export const FormSettings = ({match}) => {
     });
 
     // Active tab state
-    const [activeTab, setActiveTab] = useState('responses');
+    const [activeTab, setActiveTab] = useState('basic');
 
     const [updateFormMetadata] = useMutation(UPDATE_FORM_METADATA_MUTATION);
     const [updateResponses] = useMutation(UPDATE_FORM_MIXIN_RESPONSES_MUTATION);
@@ -293,11 +305,11 @@ export const FormSettings = ({match}) => {
                         language: 'en',
                         submitBtnLabel: formData.submitBtnLabel,
                         resetBtnLabel: formData.resetBtnLabel,
-                        showResetBtn: formData.showResetBtn,
+                        showResetBtn: formData.showResetBtn.toString(),
                         newFormBtnLabel: formData.newFormBtnLabel,
-                        showNewFormBtn: formData.showNewFormBtn,
+                        showNewFormBtn: formData.showNewFormBtn.toString(),
                         tryAgainBtnLabel: formData.tryAgainBtnLabel,
-                        showTryAgainBtn: formData.showTryAgainBtn
+                        showTryAgainBtn: formData.showTryAgainBtn.toString()
                     }
                 }),
                 updateActions({
@@ -531,14 +543,6 @@ export const FormSettings = ({match}) => {
             )}
             content={
                 <div className="fs-settings">
-                    <div className="fs-settings__form-header">
-                        <Typography variant="heading" level={2}>
-                            {currentLabel || t('settings.formNamePlaceholder')}
-                        </Typography>
-                        <Typography variant="body" className="fs-settings__form-subtitle">
-                            {t('settings.formSubtitle')}
-                        </Typography>
-                    </div>
                     <Paper className="fs-settings__content">
                         <div className="fs-settings__tabs">
                             <Button

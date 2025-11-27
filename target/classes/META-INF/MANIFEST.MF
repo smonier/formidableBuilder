@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1764264812748
+Bnd-LastModified: 1764279144008
 Build-Jdk-Spec: 17
 Bundle-Category: jahia-module
 Bundle-Description: This is the custom ReactJS module (Formidable Builde
@@ -13,9 +13,9 @@ Bundle-Version: 1.0.0.SNAPSHOT
 Created-By: Apache Maven Bundle Plugin 5.1.9
 Dynamic-ImportPackage: *
 Git-branch: main
-Git-commit-desc: first commit
-Git-last-commit-id: 5b44844e1a7324170c4a1077d14134efc750f6a6
-Git-last-commit-time: 2025-11-27T11:10:23+0100
+Git-commit-desc: integrated richtext editor lexical
+Git-last-commit-id: 9d14e973439b69d8f0976c89b9e63f70a9634eb1
+Git-last-commit-time: 2025-11-27T18:34:28+0100
 Implementation-Title: Formidable Builder
 Implementation-URL: http://www.jahia.com
 Implementation-Vendor: Jahia Solutions Group SA

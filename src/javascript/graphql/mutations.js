@@ -38,6 +38,7 @@ export const UPDATE_FORM_MIXIN_RESPONSES_MUTATION = gql`
     mutation UpdateFormMixinResponses($workspace: Workspace!, $pathOrId: String!, $language: String!, $submissionMessage: String, $errorMessage: String) {
         jcr(workspace: $workspace) {
             mutateNode(pathOrId: $pathOrId) {
+                addMixin(mixin: "fmdbmix:responses")
                 mutateProperty_submissionMessage: mutateProperty(name: "submissionMessage") {
                     setValue(value: $submissionMessage, language: $language)
                 }
@@ -51,9 +52,10 @@ export const UPDATE_FORM_MIXIN_RESPONSES_MUTATION = gql`
 `;
 
 export const UPDATE_FORM_MIXIN_BUTTONS_MUTATION = gql`
-    mutation UpdateFormMixinButtons($workspace: Workspace!, $pathOrId: String!, $language: String!, $submitBtnLabel: String, $resetBtnLabel: String, $showResetBtn: Boolean, $newFormBtnLabel: String, $showNewFormBtn: Boolean, $tryAgainBtnLabel: String, $showTryAgainBtn: Boolean) {
+    mutation UpdateFormMixinButtons($workspace: Workspace!, $pathOrId: String!, $language: String!, $submitBtnLabel: String, $resetBtnLabel: String, $showResetBtn: String, $newFormBtnLabel: String, $showNewFormBtn: String, $tryAgainBtnLabel: String, $showTryAgainBtn: String) {
         jcr(workspace: $workspace) {
             mutateNode(pathOrId: $pathOrId) {
+                addMixin(mixin: "fmdbmix:buttons")
                 mutateProperty_submitBtnLabel: mutateProperty(name: "submitBtnLabel") {
                     setValue(value: $submitBtnLabel, language: $language)
                 }
@@ -85,6 +87,7 @@ export const UPDATE_FORM_MIXIN_ACTIONS_MUTATION = gql`
     mutation UpdateFormMixinActions($workspace: Workspace!, $pathOrId: String!, $customTarget: String) {
         jcr(workspace: $workspace) {
             mutateNode(pathOrId: $pathOrId) {
+                addMixin(mixin: "fmdbmix:actions")
                 mutateProperty(name: "customTarget") {
                     setValue(value: $customTarget)
                 }
@@ -98,6 +101,7 @@ export const UPDATE_FORM_MIXIN_STYLE_MUTATION = gql`
     mutation UpdateFormMixinStyle($workspace: Workspace!, $pathOrId: String!, $css: String) {
         jcr(workspace: $workspace) {
             mutateNode(pathOrId: $pathOrId) {
+                addMixin(mixin: "fmdbmix:style")
                 mutateProperty(name: "css") {
                     setValue(value: $css)
                 }

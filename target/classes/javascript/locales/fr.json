@@ -164,7 +164,8 @@
         }
       },
       "preview": {
-        "title": "JSON preview"
+        "title": "JSON preview",
+        "subtitle": "Prévisualisez l'apparence de votre formulaire pour les utilisateurs"
       }
     },
     "settings": {

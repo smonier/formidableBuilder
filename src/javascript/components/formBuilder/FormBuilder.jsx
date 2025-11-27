@@ -2,11 +2,12 @@ import React, {useEffect, useMemo, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useHistory, useLocation} from 'react-router';
 import {Button, LayoutContent, Loader, Typography, Header} from '@jahia/moonstone';
-import {ChevronLeft} from '@jahia/moonstone/dist/icons';
+import {ChevronLeft, Visibility, Setting, Edit} from '@jahia/moonstone/dist/icons';
 import {useTranslation} from 'react-i18next';
 import {Sidebar} from './sidebar/Sidebar';
 import {StepEditor} from './steps/StepEditor';
 import {FieldEditor} from './fields/FieldEditor';
+import {FormPreview} from './FormPreview';
 import {useFormEditor} from '../../hooks/useFormEditor';
 import {FORM_NAMESPACE} from '../../constants/formBuilder';
 import './FormBuilder.scss';
@@ -32,6 +33,10 @@ export const FormBuilder = ({match}) => {
         saveChanges,
         saving
     } = useFormEditor(formId);
+
+    // Check if we're in preview mode
+    const searchParams = new URLSearchParams(location.search);
+    const isPreviewMode = searchParams.get('view') === 'preview';
 
     const [activeStepId, setActiveStepId] = useState(null);
     const [activeFieldId, setActiveFieldId] = useState(null);
@@ -136,7 +141,28 @@ export const FormBuilder = ({match}) => {
             variant="ghost"
             size="big"
             label={t('actions.settings')}
+            icon={<Setting size="small"/>}
             onClick={() => history.push(`${match.url}/settings`)}
+        />
+    );
+    const previewAction = (
+        <Button
+            key="preview"
+            variant="ghost"
+            size="big"
+            label={t('actions.preview')}
+            icon={<Visibility size="small"/>}
+            onClick={() => history.push(`${match.url}?view=preview`)}
+        />
+    );
+    const editAction = (
+        <Button
+            key="edit"
+            variant="ghost"
+            size="big"
+            label="Edit Form"
+            icon={<Edit size="small"/>}
+            onClick={() => history.push(match.url)}
         />
     );
     const saveAction = (
@@ -158,6 +184,11 @@ export const FormBuilder = ({match}) => {
                     <Typography variant="body">{t('states.loading')}</Typography>
                 </div>
             );
+        }
+
+        // If in preview mode, render the preview component
+        if (isPreviewMode) {
+            return <FormPreview match={match} location={location}/>;
         }
 
         return (
@@ -202,7 +233,7 @@ export const FormBuilder = ({match}) => {
                     title={headerTitle}
                     subtitle={t('list.subtitle')}
                     backButton={backButton}
-                    mainActions={[settingsAction, saveAction]}
+                    mainActions={isPreviewMode ? [settingsAction, editAction, saveAction] : [settingsAction, previewAction, saveAction]}
                 />
             )}
             content={renderContent()}
