@@ -1,0 +1,178 @@
+{
+  "formidableBuilder": {
+    "label": "Constructeur de formulaires",
+    "accordionTitle": "Formulaires",
+    "states": {
+      "loading": "Chargement des formulaires..."
+    },
+    "actions": {
+      "create": "Créer un formulaire",
+      "creating": "Création...",
+      "cancel": "Annuler",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "duplicate": "Dupliquer",
+      "preview": "Prévisualiser",
+      "submissions": "Soumissions",
+      "settings": "Paramètres",
+      "refresh": "Actualiser",
+      "back": "Retour à la liste",
+      "save": "Enregistrer",
+      "saving": "Enregistrement..."
+    },
+    "list": {
+      "title": "Tous les formulaires",
+      "subtitle": "Gérez les formulaires Formidable depuis JContent.",
+      "empty": "Aucun formulaire pour l'instant.",
+      "create": {
+        "title": "Nouveau formulaire",
+        "description": "Saisissez un titre et une introduction optionnelle."
+      },
+      "fields": {
+        "title": "Titre",
+        "titlePlaceholder": "Ex : Formulaire de contact",
+        "intro": "Introduction",
+        "introPlaceholder": "Expliquez l’objectif de ce formulaire"
+      },
+      "columns": {
+        "title": "Titre",
+        "steps": "Étapes",
+        "intro": "Introduction",
+        "actions": "Actions",
+        "stepCount": "{{count}} étape(s)",
+        "noIntro": "Sans introduction"
+      },
+      "actions": {
+        "deleteConfirm": "Supprimer le formulaire « {{title}} » ?"
+      },
+      "cards": {
+        "updated": "Dernière mise à jour",
+        "neverUpdated": "Jamais mis à jour",
+        "duplicateName": "{{title}} (Copie)",
+        "introFallback": "Aucune description"
+      }
+    },
+    "builder": {
+      "form": {
+        "title": "Titre du formulaire",
+        "intro": "Introduction"
+      },
+      "sidebar": {
+        "title": "Étapes",
+        "addStep": "Ajouter une étape",
+        "removeStep": "Supprimer",
+        "removeConfirm": "Supprimer l'étape « {{title}} » ?"
+      },
+      "step": {
+        "empty": "Sélectionnez une étape pour commencer.",
+        "label": "Libellé de l'étape",
+        "description": "Description"
+      },
+      "fields": {
+        "title": "Champs",
+        "addField": "Ajouter un champ",
+        "empty": "Aucun champ pour cette étape.",
+        "remove": "Supprimer",
+        "removeConfirm": "Supprimer le champ « {{title}} » ?",
+        "selectField": "Sélectionnez un champ pour modifier ses propriétés.",
+        "editorTitle": "Paramètres du champ",
+        "label": "Libellé",
+        "name": "Nom technique",
+        "properties": {
+          "buttonType": "Action du bouton",
+          "buttonTypeOptions": {
+            "button": "Bouton",
+            "submit": "Soumettre",
+            "reset": "Réinitialiser"
+          },
+          "variant": "Variante",
+          "variantOptions": {
+            "primary": "Primaire",
+            "secondary": "Secondaire",
+            "danger": "Danger"
+          },
+          "required": "Obligatoire",
+          "defaultChecked": "Coché par défaut",
+          "value": "Valeur",
+          "placeholder": "Placeholder",
+          "defaultValue": "Valeur par défaut",
+          "defaultDate": "Date par défaut",
+          "minDate": "Date minimum",
+          "maxDate": "Date maximum",
+          "defaultDateTime": "Date & heure par défaut",
+          "minDateTime": "Date & heure minimum",
+          "maxDateTime": "Date & heure maximum",
+          "step": "Pas",
+          "list": "Valeurs de la liste de données",
+          "listAdd": "Ajouter une valeur",
+          "listRemove": "Supprimer la valeur",
+          "listItem": "Valeur {{index}}",
+          "pattern": "Pattern",
+          "minLength": "Longueur minimale",
+          "maxLength": "Longueur maximale",
+          "autocomplete": "Autocomplétion",
+          "multiple": "Autoriser plusieurs valeurs",
+          "options": "Options",
+          "optionsAdd": "Ajouter une option",
+          "optionsRemove": "Supprimer l’option",
+          "optionsItem": "Option {{index}}",
+          "size": "Options visibles",
+          "disabled": "Désactivé",
+          "autofocus": "Focus automatique",
+          "accept": "Types MIME acceptés",
+          "rows": "Lignes",
+          "resize": "Comportement du redimensionnement",
+          "resizeOptions": {
+            "none": "Aucun",
+            "both": "Les deux",
+            "horizontal": "Horizontal",
+            "vertical": "Vertical"
+          },
+          "selectPlaceholder": "Sélectionner une option"
+        },
+        "radioGroup": {
+          "optionsTitle": "Options radio",
+          "empty": "Aucune option pour le moment.",
+          "addOption": "Ajouter une option radio",
+          "optionLabel": "Option {{index}}"
+        },
+        "checkboxGroup": {
+          "optionsTitle": "Options de cases à cocher",
+          "empty": "Aucune case pour le moment.",
+          "addOption": "Ajouter une case",
+          "optionLabel": "Option {{index}}"
+        },
+        "select": {
+          "optionsTitle": "Options de liste",
+          "empty": "Aucune option pour le moment.",
+          "addOption": "Ajouter une option",
+          "optionValueLabel": "Valeur",
+          "optionLabelLabel": "Label",
+          "optionSelected": "Sélectionnée",
+          "optionLabel": "Option {{index}}"
+        }
+      },
+      "preview": {
+        "title": "Aperçu JSON"
+      }
+    },
+    "fields": {
+      "types": {
+        "inputButton": "Bouton",
+        "inputCheckbox": "Case à cocher",
+        "checkboxGroup": "Groupe de cases",
+        "inputColor": "Couleur",
+        "inputDate": "Date",
+        "inputDatetimeLocal": "Date/heure",
+        "inputEmail": "E-mail",
+        "inputFile": "Fichier",
+        "inputHidden": "Caché",
+        "inputRadio": "Option radio",
+        "radioGroup": "Groupe radio",
+        "inputText": "Texte",
+        "select": "Liste",
+        "textarea": "Zone de texte"
+      }
+    }
+  }
+}

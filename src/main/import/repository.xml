@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content xmlns:j="http://www.jahia.org/jahia/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0">
+   <modules jcr:primaryType="jnt:modules">
+      <formidableBuilder j:dependencies="default"
+                                        j:modulePriority="0"
+                                        j:moduleType="module"
+                                        j:title="Formidable Builder"
+                                        jcr:primaryType="jnt:module">
+         <portlets jcr:primaryType="jnt:portletFolder"/>
+         <files jcr:primaryType="jnt:folder"/>
+         <contents jcr:primaryType="jnt:contentFolder">
+            <forms j:contributeTypes="fmdb:form"
+                     j:editableInContribution="true"
+                     jcr:mixinTypes="jmix:contributeMode"
+                     jcr:primaryType="jnt:contentFolder">
+               <j:translation_en jcr:language="en"
+                                 jcr:mixinTypes="mix:title"
+                                 jcr:primaryType="jnt:translation"
+                                 jcr:title="Forms"/>
+               <j:translation_de jcr:language="de"
+                                 jcr:mixinTypes="mix:title"
+                                 jcr:primaryType="jnt:translation"
+                                 jcr:title="Forms"/>
+               <j:translation_it jcr:language="it"
+                                 jcr:mixinTypes="mix:title"
+                                 jcr:primaryType="jnt:translation"
+                                 jcr:title="Forms"/>
+               <j:translation_fr jcr:language="fr"
+                                 jcr:mixinTypes="mix:title"
+                                 jcr:primaryType="jnt:translation"
+                                 jcr:title="Forms"/>
+               <j:translation_es jcr:language="es"
+                                 jcr:mixinTypes="mix:title"
+                                 jcr:primaryType="jnt:translation"
+                                 jcr:title="Forms"/>
+               <j:translation_pt jcr:language="pt"
+                                 jcr:mixinTypes="mix:title"
+                                 jcr:primaryType="jnt:translation"
+                                 jcr:title="Forms"/>
+            </forms>
+         </contents>
+      </formidableBuilder>
+   </modules>
+</content>

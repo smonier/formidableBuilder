@@ -1,0 +1,48 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1764238011664
+Build-Jdk-Spec: 17
+Bundle-Category: jahia-module
+Bundle-Description: This is the custom ReactJS module (Formidable Builde
+ r) for running on a Jahia server.
+Bundle-DocURL: http://www.jahia.com
+Bundle-ManifestVersion: 2
+Bundle-Name: Formidable Builder
+Bundle-SymbolicName: formidableBuilder
+Bundle-Vendor: Jahia Solutions Group SA
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin 5.1.9
+Dynamic-ImportPackage: *
+Implementation-Title: Formidable Builder
+Implementation-URL: http://www.jahia.com
+Implementation-Vendor: Jahia Solutions Group SA
+Implementation-Version: 1.0.0-SNAPSHOT
+Import-Package: org.apache.naming.java,org.jahia.defaults.config.spring,
+ org.jahia.exceptions,org.jahia.services
+Jahia-Download-Sources-Available: true
+Jahia-GroupId: org.jahia.se.modules
+Jahia-Module-Type: module
+Jahia-Required-Version: 8.2.0.0
+Jahia-Source-Control-Connection: scm:git:git@github.com:Jahia/jahia-priv
+ ate.git/jahia-modules/formidableBuilder
+Jahia-Source-Control-DeveloperConnection: scm:git:git@github.com:Jahia/j
+ ahia-private.git/jahia-modules/formidableBuilder
+Jahia-Source-Control-Tag: JAHIA_8_2_0_0
+Jahia-Source-Folders: /Users/stephane/Runtimes/0.Modules/formidableBuild
+ er
+Jahia-Static-Resources: /css,/icons,/images,/img,/javascript
+Provide-Capability: com.jahia.modules.dependencies;moduleIdentifier=form
+ idableBuilder;moduleVersion:Version="1.0.0.SNAPSHOT",com.jahia.modules.
+ dependencies;moduleIdentifier="Formidable Builder";moduleVersion:Versio
+ n="1.0.0.SNAPSHOT"
+Require-Capability: com.jahia.services.content;filter:="(nodetypes=jmix:
+ contributeMode)",com.jahia.services.content;filter:="(nodetypes=jnt:con
+ tentFolder)",com.jahia.services.content;filter:="(nodetypes=jnt:folder)
+ ",com.jahia.services.content;filter:="(nodetypes=jnt:module)",com.jahia
+ .services.content;filter:="(nodetypes=jnt:modules)",com.jahia.services.
+ content;filter:="(nodetypes=jnt:portletFolder)",com.jahia.services.cont
+ ent;filter:="(nodetypes=jnt:translation)",com.jahia.services.content;fi
+ lter:="(nodetypes=mix:title)"
+Specification-Title: Formidable Builder
+Specification-Vendor: Jahia Solutions Group SA
+Specification-Version: 1.0.0-SNAPSHOT
+Tool: Bnd-6.3.1.202206071316

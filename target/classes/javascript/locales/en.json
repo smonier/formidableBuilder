@@ -1,0 +1,187 @@
+{
+  "formidableBuilder": {
+    "label": "Form Builder",
+    "accordionTitle": "Forms",
+    "states": {
+      "loading": "Loading form data..."
+    },
+    "actions": {
+      "create": "Create form",
+      "creating": "Creating...",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "duplicate": "Duplicate",
+      "preview": "Preview",
+      "submissions": "Submissions",
+      "settings": "Form settings",
+      "refresh": "Refresh",
+      "back": "Back to list",
+      "save": "Save changes",
+      "saving": "Saving..."
+    },
+    "list": {
+      "title": "All forms",
+      "subtitle": "Manage Formidable forms directly from JContent.",
+      "empty": "No forms available yet.",
+      "create": {
+        "title": "Create a new form",
+        "description": "Provide a title and optional introduction for the new form."
+      },
+      "fields": {
+        "title": "Title",
+        "titlePlaceholder": "Ex: Contact form",
+        "intro": "Introduction",
+        "introPlaceholder": "Tell authors what this form is about"
+      },
+      "columns": {
+        "title": "Form title",
+        "steps": "Steps",
+        "intro": "Introduction",
+        "actions": "Actions",
+        "stepCount": "{{count}} step(s)",
+        "noIntro": "No introduction"
+      },
+      "actions": {
+        "deleteConfirm": "Delete form \"{{title}}\"?"
+      },
+      "cards": {
+        "updated": "Last updated",
+        "neverUpdated": "Never updated",
+        "duplicateName": "{{title}} (Copy)",
+        "introFallback": "No description provided"
+      }
+    },
+    "builder": {
+      "form": {
+        "title": "Form title",
+        "intro": "Introduction"
+      },
+      "sidebar": {
+        "title": "Steps",
+        "addStep": "Add step",
+        "removeStep": "Remove",
+        "removeConfirm": "Delete step \"{{title}}\"?"
+      },
+      "step": {
+        "empty": "Select a step to start editing.",
+        "label": "Step label",
+        "description": "Step description"
+      },
+      "fields": {
+        "title": "Fields",
+        "addField": "Add a field",
+        "empty": "No fields yet.",
+        "remove": "Remove",
+        "removeConfirm": "Delete field \"{{title}}\"?",
+        "selectField": "Select a field to edit its properties.",
+        "editorTitle": "Field settings",
+        "label": "Field label",
+        "name": "Field name",
+        "properties": {
+          "buttonType": "Button action",
+          "buttonTypeOptions": {
+            "button": "Button",
+            "submit": "Submit",
+            "reset": "Reset"
+          },
+          "variant": "Variant",
+          "variantOptions": {
+            "primary": "Primary",
+            "secondary": "Secondary",
+            "danger": "Danger"
+          },
+          "required": "Required",
+          "defaultChecked": "Checked by default",
+          "value": "Value",
+          "placeholder": "Placeholder",
+          "defaultValue": "Default value",
+          "defaultDate": "Default date",
+          "minDate": "Minimum date",
+          "maxDate": "Maximum date",
+          "defaultDateTime": "Default date & time",
+          "minDateTime": "Minimum date & time",
+          "maxDateTime": "Maximum date & time",
+          "step": "Step",
+          "list": "Data list values",
+          "listAdd": "Add value",
+          "listRemove": "Remove value",
+          "listItem": "Value {{index}}",
+          "pattern": "Pattern",
+          "minLength": "Minimum length",
+          "maxLength": "Maximum length",
+          "autocomplete": "Autocomplete",
+          "multiple": "Allow multiple values",
+          "options": "Options",
+          "optionsAdd": "Add option",
+          "optionsRemove": "Remove option",
+          "optionsItem": "Option {{index}}",
+          "size": "Visible options",
+          "disabled": "Disabled",
+          "autofocus": "Auto focus",
+          "accept": "Accepted MIME types",
+          "rows": "Rows",
+          "resize": "Resize behaviour",
+          "resizeOptions": {
+            "none": "None",
+            "both": "Both",
+            "horizontal": "Horizontal",
+            "vertical": "Vertical"
+          },
+          "selectPlaceholder": "Select an option"
+        },
+        "radioGroup": {
+          "optionsTitle": "Radio options",
+          "empty": "No radio options yet.",
+          "addOption": "Add radio option",
+          "optionLabel": "Option {{index}}"
+        },
+        "checkboxGroup": {
+          "optionsTitle": "Checkbox options",
+          "empty": "No checkbox options yet.",
+          "addOption": "Add checkbox",
+          "optionLabel": "Option {{index}}"
+        },
+        "select": {
+          "optionsTitle": "Select options",
+          "empty": "No select options yet.",
+          "addOption": "Add select option",
+          "optionValueLabel": "Value",
+          "optionLabelLabel": "Label",
+          "optionSelected": "Selected",
+          "optionLabel": "Option {{index}}"
+        },
+        "selectOption": {
+          "optionsTitle": "Select options",
+          "empty": "No options yet.",
+          "addOption": "Add select option",
+          "optionValueLabel": "Value",
+          "optionLabelLabel": "Label",
+          "optionSelected": "Selected",
+          "optionLabel": "Option {{index}}"
+        }
+      },
+      "preview": {
+        "title": "JSON preview"
+      }
+    },
+    "fields": {
+      "types": {
+        "inputButton": "Button",
+        "inputCheckbox": "Checkbox",
+        "checkboxGroup": "Checkbox group",
+        "inputColor": "Color",
+        "inputDate": "Date",
+        "inputDatetimeLocal": "Date/time",
+        "inputEmail": "Email",
+        "inputFile": "File upload",
+        "inputHidden": "Hidden",
+        "inputRadio": "Radio option",
+        "radioGroup": "Radio group",
+        "inputText": "Text",
+        "select": "Select",
+        "textarea": "Textarea"
+      }
+    }
+  }
+}
