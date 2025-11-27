@@ -6,9 +6,48 @@ import {CREATE_FORM_MUTATION, DELETE_NODE_MUTATION} from '../graphql/mutations';
 import {slugify} from '../utils/string';
 
 const buildStepCount = node => {
-    const fieldsetContainer = ((node.children || {}).nodes || [])[0];
-    const steps = fieldsetContainer ? ((fieldsetContainer.children || {}).nodes || []) : [];
-    return steps.length;
+    const fieldsets = ((node.children || {}).nodes || []).filter(child => child.primaryNodeType?.name === 'fmdb:fieldset');
+    return fieldsets.length;
+};
+
+const getLatestModifiedDate = node => {
+    const dates = [];
+
+    // Add the form's own last modified date
+    const formLastModified = node.properties?.find(property => property.name === 'jcr:lastModified')?.value;
+    if (formLastModified) {
+        dates.push(new Date(formLastModified));
+    }
+
+    // Recursively collect last modified dates from all child nodes
+    const collectDates = (currentNode, depth = 0) => {
+        // Only go 3 levels deep to avoid infinite recursion
+        if (depth > 3) {
+            return;
+        }
+
+        if (currentNode.properties && Array.isArray(currentNode.properties)) {
+            const lastModified = currentNode.properties.find(property => property.name === 'jcr:lastModified')?.value;
+            if (lastModified) {
+                dates.push(new Date(lastModified));
+            }
+        }
+
+        if (currentNode.children && currentNode.children.nodes && Array.isArray(currentNode.children.nodes)) {
+            currentNode.children.nodes.forEach(child => collectDates(child, depth + 1));
+        }
+    };
+
+    // Start collecting from all fieldsets
+    const fieldsets = ((node.children || {}).nodes || []).filter(child => child.primaryNodeType?.name === 'fmdb:fieldset');
+    fieldsets.forEach(fieldset => collectDates(fieldset));
+
+    // Return the most recent date, or null if no dates found
+    if (dates.length > 0) {
+        return new Date(Math.max(...dates.map(date => date.getTime())));
+    }
+
+    return null;
 };
 
 export const useFormList = () => {
@@ -31,7 +70,7 @@ export const useFormList = () => {
             title: node.displayName || node.name,
             intro: node.properties?.find(property => property.name === 'intro')?.value || '',
             steps: buildStepCount(node),
-            updatedAt: node.properties?.find(property => property.name === 'jcr:lastModified')?.value || null
+            updatedAt: getLatestModifiedDate(node)
         }));
     }, [data]);
 

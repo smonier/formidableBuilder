@@ -26,6 +26,21 @@ export const FormListView = () => {
         });
     };
 
+    const navigateToSettings = form => {
+        history.push({
+            pathname: `${basePath}/${form.id}/settings`,
+            state: {formTitle: form.title}
+        });
+    };
+
+    const navigateToPreview = form => {
+        history.push(`${basePath}/${form.id}?view=preview`);
+    };
+
+    const navigateToSubmissions = form => {
+        history.push(`${basePath}/${form.id}?view=submissions`);
+    };
+
     const handleDelete = async form => {
         /* eslint-disable-next-line no-alert */
         const confirmed = window.confirm(t('list.actions.deleteConfirm', {title: form.title}));
@@ -59,18 +74,6 @@ export const FormListView = () => {
             }
         };
     }, [language, t]);
-
-    const navigateToPreview = form => {
-        history.push(`${basePath}/${form.id}?view=preview`);
-    };
-
-    const navigateToSubmissions = form => {
-        history.push(`${basePath}/${form.id}?view=submissions`);
-    };
-
-    const navigateToSettings = form => {
-        history.push(`${basePath}/${form.id}?view=settings`);
-    };
 
     const handleDuplicate = async form => {
         const duplicateTitle = t('list.cards.duplicateName', {title: form.title});

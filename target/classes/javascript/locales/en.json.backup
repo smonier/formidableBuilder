@@ -59,9 +59,9 @@
       },
       "sidebar": {
         "title": "Form Builder",
+        "addStep": "Add step",
         "stepsTab": "Steps",
         "fieldsTab": "Fields",
-        "addStep": "Add step",
         "removeStep": "Remove",
         "removeConfirm": "Delete step \"{{title}}\"?"
       },
@@ -163,15 +163,9 @@
           "optionLabel": "Option {{index}}"
         }
       },
-      "preview": {
-        "title": "JSON preview"
-      }
-    },
     "settings": {
       "title": "Form settings",
       "subtitle": "Configure form properties and behavior",
-      "formNamePlaceholder": "Loading form...",
-      "formSubtitle": "Configure the settings and behavior for this form",
       "tabs": {
         "basic": "Basic",
         "responses": "Messages",
@@ -183,49 +177,39 @@
         "title": "Basic Settings",
         "formTitle": "Form Title",
         "formTitlePlaceholder": "Enter form title",
-        "formTitleDescription": "The main title displayed at the top of your form",
         "intro": "Introduction",
-        "introPlaceholder": "Enter form introduction",
-        "introDescription": "Optional introductory text shown above the form fields"
+        "introPlaceholder": "Enter form introduction"
       },
       "responses": {
         "title": "Response Messages",
         "submissionMessage": "Success Message",
         "submissionMessagePlaceholder": "Message shown after successful submission",
-        "submissionMessageDescription": "Message displayed to users when their form submission is successful",
         "errorMessage": "Error Message",
-        "errorMessagePlaceholder": "Message shown when submission fails",
-        "errorMessageDescription": "Message displayed when there are errors in form submission"
+        "errorMessagePlaceholder": "Message shown when submission fails"
       },
       "buttons": {
         "title": "Button Settings",
         "submitBtnLabel": "Submit Button Label",
         "submitBtnLabelPlaceholder": "Submit",
-        "submitBtnLabelDescription": "Text displayed on the main submit button",
         "showResetBtn": "Show Reset Button",
-        "showResetBtnDescription": "Display a button to clear all form fields",
         "resetBtnLabel": "Reset Button Label",
         "resetBtnLabelPlaceholder": "Reset",
         "showNewFormBtn": "Show New Form Button",
-        "showNewFormBtnDescription": "Display a button to start a new form submission",
         "newFormBtnLabel": "New Form Button Label",
         "newFormBtnLabelPlaceholder": "New Form",
         "showTryAgainBtn": "Show Try Again Button",
-        "showTryAgainBtnDescription": "Display a button to retry submission after an error",
         "tryAgainBtnLabel": "Try Again Button Label",
         "tryAgainBtnLabelPlaceholder": "Try Again"
       },
       "actions": {
         "title": "Action Settings",
         "customTarget": "Custom Target URL",
-        "customTargetPlaceholder": "Enter redirect URL after submission",
-        "customTargetDescription": "URL to redirect users to after successful form submission (leave empty for default behavior)"
+        "customTargetPlaceholder": "Enter redirect URL after submission"
       },
       "style": {
         "title": "Custom Styles",
         "css": "Custom CSS",
-        "cssPlaceholder": "Enter custom CSS for the form",
-        "cssDescription": "Add custom CSS styles to customize the appearance of your form"
+        "cssPlaceholder": "Enter custom CSS for the form"
       }
     },
     "fields": {

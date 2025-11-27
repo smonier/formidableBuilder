@@ -63,6 +63,21 @@
   align-items: center;
 }
 
+.fb-sidebar__tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 0 16px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+  .moonstone-Button {
+    flex: 1;
+    min-height: 44px;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
 .fb-step-list,
 .fb-field-list {
   list-style: none;
@@ -102,6 +117,14 @@
   cursor: pointer;
 }
 
+.fb-field-row__content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  margin-right: 16px;
+}
+
 .fb-step-editor,
 .fb-field-editor,
 .fb-json,
@@ -117,6 +140,13 @@
 }
 
 .fb-step-editor {
+  padding: 28px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 25px 50px rgba(18, 28, 78, 0.1);
+}
+
+.fb-field-editor {
   padding: 28px;
   border-radius: 18px;
   background: #fff;
@@ -212,7 +242,21 @@
 .fb-field-type-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
+
+  .moonstone-Button {
+    min-height: 48px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 120px;
+    justify-content: center;
+  }
 }
 
 .fb-field-list {
@@ -276,3 +320,83 @@
   gap: 12px;
   padding: 64px;
 }
+
+.fb-field-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.fb-field-preview__label {
+  font-weight: 500;
+  color: #666;
+}
+
+.fb-field-preview__input,
+.fb-field-preview__textarea,
+.fb-field-preview__select {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f9f9f9;
+  color: #333;
+  font-size: 14px;
+}
+
+.fb-field-preview__input:disabled,
+.fb-field-preview__textarea:disabled,
+.fb-field-preview__select:disabled {
+  background: #f5f5f5;
+  color: #999;
+}
+
+.fb-field-preview__checkbox,
+.fb-field-preview__radio {
+  margin-right: 4px;
+}
+
+.fb-field-preview__group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fb-field-preview__option {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fb-field-preview__button {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f9f9f9;
+  color: #333;
+  cursor: not-allowed;
+  font-size: 14px;
+}
+
+.fb-field-preview__button--primary {
+  background: #2681ff;
+  color: #fff;
+  border-color: #2681ff;
+}
+
+.fb-field-preview__unknown {
+  color: #999;
+  font-style: italic;
+}
+
+.fb-field-preview__placeholder {
+  color: #999;
+  font-style: italic;
+  font-size: 14px;
+}
+
+@import './FormSettings.scss';

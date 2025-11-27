@@ -1,0 +1,95 @@
+.fs-settings {
+  padding: 24px;
+
+  &__form-header {
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  &__form-subtitle {
+    margin-top: 8px;
+    color: #666;
+  }
+
+  &__content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  &__tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 16px;
+  }
+
+  &__tab-content {
+    padding: 24px 0;
+  }
+
+  &__section {
+    margin-bottom: 32px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__field-description {
+    margin-bottom: 8px;
+    color: #666;
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  &__field {
+    margin-bottom: 24px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__switch-field {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+}
+
+// Lexical Editor Styles
+.lexical-editor {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+
+  .lexical-content-editable {
+    outline: none;
+    min-height: 80px;
+    padding: 8px 0;
+  }
+
+  .lexical-placeholder {
+    color: #999;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    pointer-events: none;
+  }
+
+  // Basic text formatting
+  .font-bold {
+    font-weight: bold;
+  }
+
+  .italic {
+    font-style: italic;
+  }
+
+  .underline {
+    text-decoration: underline;
+  }
+}

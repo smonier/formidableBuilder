@@ -22,11 +22,84 @@ export const UPDATE_FORM_METADATA_MUTATION = gql`
     mutation UpdateFormMetadata($workspace: Workspace!, $pathOrId: String!, $language: String!, $title: String!, $intro: String) {
         jcr(workspace: $workspace) {
             mutateNode(pathOrId: $pathOrId) {
-                mutateProperty(name: "jcr:title") {
+                mutateProperty_title: mutateProperty(name: "jcr:title") {
                     setValue(value: $title, language: $language)
                 }
-                mutateProperty(name: "intro") {
+                mutateProperty_intro: mutateProperty(name: "intro") {
                     setValue(value: $intro, language: $language)
+                }
+                uuid
+            }
+        }
+    }
+`;
+
+export const UPDATE_FORM_MIXIN_RESPONSES_MUTATION = gql`
+    mutation UpdateFormMixinResponses($workspace: Workspace!, $pathOrId: String!, $language: String!, $submissionMessage: String, $errorMessage: String) {
+        jcr(workspace: $workspace) {
+            mutateNode(pathOrId: $pathOrId) {
+                mutateProperty_submissionMessage: mutateProperty(name: "submissionMessage") {
+                    setValue(value: $submissionMessage, language: $language)
+                }
+                mutateProperty_errorMessage: mutateProperty(name: "errorMessage") {
+                    setValue(value: $errorMessage, language: $language)
+                }
+                uuid
+            }
+        }
+    }
+`;
+
+export const UPDATE_FORM_MIXIN_BUTTONS_MUTATION = gql`
+    mutation UpdateFormMixinButtons($workspace: Workspace!, $pathOrId: String!, $language: String!, $submitBtnLabel: String, $resetBtnLabel: String, $showResetBtn: Boolean, $newFormBtnLabel: String, $showNewFormBtn: Boolean, $tryAgainBtnLabel: String, $showTryAgainBtn: Boolean) {
+        jcr(workspace: $workspace) {
+            mutateNode(pathOrId: $pathOrId) {
+                mutateProperty_submitBtnLabel: mutateProperty(name: "submitBtnLabel") {
+                    setValue(value: $submitBtnLabel, language: $language)
+                }
+                mutateProperty_resetBtnLabel: mutateProperty(name: "resetBtnLabel") {
+                    setValue(value: $resetBtnLabel, language: $language)
+                }
+                mutateProperty_showResetBtn: mutateProperty(name: "showResetBtn") {
+                    setValue(value: $showResetBtn)
+                }
+                mutateProperty_newFormBtnLabel: mutateProperty(name: "newFormBtnLabel") {
+                    setValue(value: $newFormBtnLabel, language: $language)
+                }
+                mutateProperty_showNewFormBtn: mutateProperty(name: "showNewFormBtn") {
+                    setValue(value: $showNewFormBtn)
+                }
+                mutateProperty_tryAgainBtnLabel: mutateProperty(name: "tryAgainBtnLabel") {
+                    setValue(value: $tryAgainBtnLabel, language: $language)
+                }
+                mutateProperty_showTryAgainBtn: mutateProperty(name: "showTryAgainBtn") {
+                    setValue(value: $showTryAgainBtn)
+                }
+                uuid
+            }
+        }
+    }
+`;
+
+export const UPDATE_FORM_MIXIN_ACTIONS_MUTATION = gql`
+    mutation UpdateFormMixinActions($workspace: Workspace!, $pathOrId: String!, $customTarget: String) {
+        jcr(workspace: $workspace) {
+            mutateNode(pathOrId: $pathOrId) {
+                mutateProperty(name: "customTarget") {
+                    setValue(value: $customTarget)
+                }
+                uuid
+            }
+        }
+    }
+`;
+
+export const UPDATE_FORM_MIXIN_STYLE_MUTATION = gql`
+    mutation UpdateFormMixinStyle($workspace: Workspace!, $pathOrId: String!, $css: String) {
+        jcr(workspace: $workspace) {
+            mutateNode(pathOrId: $pathOrId) {
+                mutateProperty(name: "css") {
+                    setValue(value: $css)
                 }
                 uuid
             }

@@ -15,12 +15,13 @@ export const registerRoutes = () => {
         icon: <FormBuilderIcon width={24} height={24}/>,
         label: `${FORM_NAMESPACE}:accordionTitle`,
         defaultPath: constants.ROUTE,
-        appsTarget: 'formBuilderAccordionApps'
+        appsTarget: 'formBuilderAccordionApps',
+        requireModuleInstalledOnSite: 'formidable'
     });
 
     registry.add('adminRoute', 'formidableBuilder', {
         targets: ['formBuilderAccordionApps'],
-        icon: <FormBuilderIcon/>,
+        icon: <FormBuilderIcon width={12} height={12}/>,
         label: `${FORM_NAMESPACE}:label`,
         path: `${constants.ROUTE}*`,
         defaultPath: constants.ROUTE,

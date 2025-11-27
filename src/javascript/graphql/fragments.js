@@ -75,7 +75,7 @@ export const FORM_FRAGMENT = gql`
         name
         path
         displayName(language: $language)
-        properties(language: $language, names: ["intro", "jcr:title"]) {
+        properties(language: $language, names: ["intro", "jcr:title", "submissionMessage", "errorMessage", "submitBtnLabel", "resetBtnLabel", "showResetBtn", "newFormBtnLabel", "showNewFormBtn", "tryAgainBtnLabel", "showTryAgainBtn", "customTarget", "css"]) {
             ...PropertyFields
         }
         children {

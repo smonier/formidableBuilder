@@ -1,11 +1,43 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Button, Typography, Paper} from '@jahia/moonstone';
 import {DndContext, PointerSensor, useSensor, useSensors} from '@dnd-kit/core';
 import {SortableContext, verticalListSortingStrategy, useSortable, arrayMove} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import {useTranslation} from 'react-i18next';
-import {FORM_NAMESPACE} from '../../../constants/formBuilder';
+import {FIELD_TYPES, FORM_NAMESPACE} from '../../../constants/formBuilder';
+import {
+    Calendar,
+    CheckboxChecked,
+    CloudUpload,
+    Clock,
+    Follow,
+    Hidden,
+    ListSelection,
+    MultipleListSelector,
+    Palette,
+    Paragraph,
+    RadioChecked,
+    Rocket,
+    Text
+} from '@jahia/moonstone/dist/icons';
+
+const FIELD_TYPE_ICONS = {
+    inputButton: Follow,
+    inputCheckbox: CheckboxChecked,
+    checkboxGroup: MultipleListSelector,
+    inputColor: Palette,
+    inputDate: Calendar,
+    inputDatetimeLocal: Clock,
+    inputEmail: Rocket,
+    inputFile: CloudUpload,
+    inputHidden: Hidden,
+    inputRadio: RadioChecked,
+    radioGroup: RadioChecked,
+    inputText: Text,
+    select: ListSelection,
+    textarea: Paragraph
+};
 
 const StepItem = ({step, isActive, onSelect, onRemove}) => {
     const {t} = useTranslation(FORM_NAMESPACE);
@@ -37,8 +69,9 @@ StepItem.propTypes = {
     onRemove: PropTypes.func.isRequired
 };
 
-export const Sidebar = ({steps, activeStepId, onSelectStep, onAddStep, onRemoveStep, onReorderSteps}) => {
+export const Sidebar = ({steps, activeStepId, onSelectStep, onAddStep, onRemoveStep, onReorderSteps, onAddField}) => {
     const {t} = useTranslation(FORM_NAMESPACE);
+    const [activeTab, setActiveTab] = useState('steps');
     const sensors = useSensors(useSensor(PointerSensor, {activationConstraint: {distance: 8}}));
 
     const handleDragEnd = event => {
@@ -61,23 +94,62 @@ export const Sidebar = ({steps, activeStepId, onSelectStep, onAddStep, onRemoveS
         <Paper className="fb-sidebar">
             <div className="fb-sidebar__header">
                 <Typography variant="subheading">{t('builder.sidebar.title')}</Typography>
-                <Button color="accent" label={t('builder.sidebar.addStep')} onClick={onAddStep}/>
             </div>
-            <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-                <SortableContext items={steps.map(step => step.id)} strategy={verticalListSortingStrategy}>
-                    <ul className="fb-step-list">
-                        {steps.map(step => (
-                            <StepItem
-                                key={step.id}
-                                step={step}
-                                isActive={step.id === activeStepId}
-                                onSelect={onSelectStep}
-                                onRemove={onRemoveStep}
-                            />
-                        ))}
-                    </ul>
-                </SortableContext>
-            </DndContext>
+            <div className="fb-sidebar__tabs">
+                <Button
+                    variant={activeTab === 'steps' ? 'primary' : 'ghost'}
+                    size="big"
+                    label={t('builder.sidebar.stepsTab')}
+                    onClick={() => setActiveTab('steps')}
+                />
+                <Button
+                    variant={activeTab === 'fields' ? 'primary' : 'ghost'}
+                    size="big"
+                    label={t('builder.sidebar.fieldsTab')}
+                    onClick={() => setActiveTab('fields')}
+                />
+            </div>
+            {activeTab === 'steps' && (
+                <>
+                    <div className="fb-sidebar__header" style={{paddingTop: 0}}>
+                        <Button color="accent" label={t('builder.sidebar.addStep')} onClick={onAddStep}/>
+                    </div>
+                    <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+                        <SortableContext items={steps.map(step => step.id)} strategy={verticalListSortingStrategy}>
+                            <ul className="fb-step-list">
+                                {steps.map(step => (
+                                    <StepItem
+                                        key={step.id}
+                                        step={step}
+                                        isActive={step.id === activeStepId}
+                                        onSelect={onSelectStep}
+                                        onRemove={onRemoveStep}
+                                    />
+                                ))}
+                            </ul>
+                        </SortableContext>
+                    </DndContext>
+                </>
+            )}
+            {activeTab === 'fields' && (
+                <div className="fb-sidebar__fields">
+                    <Typography variant="subheading">{t('builder.fields.addField')}</Typography>
+                    <div className="fb-field-type-grid">
+                        {FIELD_TYPES.filter(type => !type.allowedParents || type.allowedParents.includes('step')).map(type => {
+                            const IconComponent = FIELD_TYPE_ICONS[type.id];
+                            return (
+                                <Button
+                                    key={type.id}
+                                    label={t(`fields.types.${type.id}`)}
+                                    icon={IconComponent ? <IconComponent size="small"/> : null}
+                                    isDisabled={!activeStepId}
+                                    onClick={() => onAddField(activeStepId, type.id)}
+                                />
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
         </Paper>
     );
 };
@@ -88,7 +160,8 @@ Sidebar.propTypes = {
     onSelectStep: PropTypes.func.isRequired,
     onAddStep: PropTypes.func.isRequired,
     onRemoveStep: PropTypes.func.isRequired,
-    onReorderSteps: PropTypes.func.isRequired
+    onReorderSteps: PropTypes.func.isRequired,
+    onAddField: PropTypes.func.isRequired
 };
 
 Sidebar.defaultProps = {

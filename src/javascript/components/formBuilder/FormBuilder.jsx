@@ -130,6 +130,15 @@ export const FormBuilder = ({match}) => {
             <ChevronLeft size="big"/>
         </button>
     );
+    const settingsAction = (
+        <Button
+            key="settings"
+            variant="ghost"
+            size="big"
+            label={t('actions.settings')}
+            onClick={() => history.push(`${match.url}/settings`)}
+        />
+    );
     const saveAction = (
         <Button
             key="save"
@@ -161,13 +170,13 @@ export const FormBuilder = ({match}) => {
                         onAddStep={addStep}
                         onRemoveStep={handleRemoveStep}
                         onReorderSteps={order => reorderSteps(order)}
+                        onAddField={addField}
                     />
                     <div className="fb-builder__main">
                         <StepEditor
                             step={activeStep}
                             activeFieldId={activeFieldId}
                             onUpdateStep={(stepId, partial) => updateStepState(stepId, partial)}
-                            onAddField={addField}
                             onRemoveField={handleRemoveField}
                             onSelectField={setActiveFieldId}
                             onReorderFields={(stepId, order) => reorderFields(stepId, order)}
@@ -193,7 +202,7 @@ export const FormBuilder = ({match}) => {
                     title={headerTitle}
                     subtitle={t('list.subtitle')}
                     backButton={backButton}
-                    mainActions={[saveAction]}
+                    mainActions={[settingsAction, saveAction]}
                 />
             )}
             content={renderContent()}

@@ -6,6 +6,7 @@ import {getApolloClient} from '../apollo/client';
 import {FormBuilderProvider} from '../contexts/FormBuilderContext';
 import {FormListView} from './formList/FormListView';
 import {FormBuilder} from './formBuilder/FormBuilder';
+import {FormSettings} from './formBuilder/FormSettings';
 
 const client = getApolloClient();
 
@@ -17,6 +18,7 @@ const FormBuilderAppRaw = ({match}) => {
             <FormBuilderProvider>
                 <Switch>
                     <Route exact path={basePath} component={FormListView}/>
+                    <Route path={`${basePath}/:formId/settings`} component={FormSettings}/>
                     <Route path={`${basePath}/:formId`} component={FormBuilder}/>
                     <Redirect to={basePath}/>
                 </Switch>

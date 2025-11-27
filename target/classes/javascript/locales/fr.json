@@ -1,177 +1,249 @@
 {
   "formidableBuilder": {
-    "label": "Constructeur de formulaires",
-    "accordionTitle": "Formulaires",
+    "label": "Form Builder",
+    "accordionTitle": "Forms",
     "states": {
-      "loading": "Chargement des formulaires..."
+      "loading": "Loading form data..."
     },
     "actions": {
-      "create": "Créer un formulaire",
-      "creating": "Création...",
-      "cancel": "Annuler",
-      "edit": "Modifier",
-      "delete": "Supprimer",
-      "duplicate": "Dupliquer",
-      "preview": "Prévisualiser",
-      "submissions": "Soumissions",
-      "settings": "Paramètres",
-      "refresh": "Actualiser",
-      "back": "Retour à la liste",
-      "save": "Enregistrer",
-      "saving": "Enregistrement..."
+      "create": "Create form",
+      "creating": "Creating...",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "duplicate": "Duplicate",
+      "preview": "Preview",
+      "submissions": "Submissions",
+      "settings": "Form settings",
+      "refresh": "Refresh",
+      "back": "Back to list",
+      "save": "Save changes",
+      "saving": "Saving..."
     },
     "list": {
-      "title": "Tous les formulaires",
-      "subtitle": "Gérez les formulaires Formidable depuis JContent.",
-      "empty": "Aucun formulaire pour l'instant.",
+      "title": "All forms",
+      "subtitle": "Manage Formidable forms directly from JContent.",
+      "empty": "No forms available yet.",
       "create": {
-        "title": "Nouveau formulaire",
-        "description": "Saisissez un titre et une introduction optionnelle."
+        "title": "Create a new form",
+        "description": "Provide a title and optional introduction for the new form."
       },
       "fields": {
-        "title": "Titre",
-        "titlePlaceholder": "Ex : Formulaire de contact",
+        "title": "Title",
+        "titlePlaceholder": "Ex: Contact form",
         "intro": "Introduction",
-        "introPlaceholder": "Expliquez l’objectif de ce formulaire"
+        "introPlaceholder": "Tell authors what this form is about"
       },
       "columns": {
-        "title": "Titre",
-        "steps": "Étapes",
+        "title": "Form title",
+        "steps": "Steps",
         "intro": "Introduction",
         "actions": "Actions",
-        "stepCount": "{{count}} étape(s)",
-        "noIntro": "Sans introduction"
+        "stepCount": "{{count}} step(s)",
+        "noIntro": "No introduction"
       },
       "actions": {
-        "deleteConfirm": "Supprimer le formulaire « {{title}} » ?"
+        "deleteConfirm": "Delete form \"{{title}}\"?"
       },
       "cards": {
-        "updated": "Dernière mise à jour",
-        "neverUpdated": "Jamais mis à jour",
-        "duplicateName": "{{title}} (Copie)",
-        "introFallback": "Aucune description"
+        "updated": "Last updated",
+        "neverUpdated": "Never updated",
+        "duplicateName": "{{title}} (Copy)",
+        "introFallback": "No description provided"
       }
     },
     "builder": {
       "form": {
-        "title": "Titre du formulaire",
+        "title": "Form title",
         "intro": "Introduction"
       },
       "sidebar": {
-        "title": "Étapes",
+        "title": "Création de Formulaires",
+        "stepsTab": "Étapes",
+        "fieldsTab": "Champs",
         "addStep": "Ajouter une étape",
         "removeStep": "Supprimer",
-        "removeConfirm": "Supprimer l'étape « {{title}} » ?"
+        "removeConfirm": "Supprimer l'étape « {{title}} » ?"
       },
       "step": {
-        "empty": "Sélectionnez une étape pour commencer.",
-        "label": "Libellé de l'étape",
-        "description": "Description"
+        "empty": "Select a step to start editing.",
+        "label": "Step label",
+        "description": "Step description"
       },
       "fields": {
-        "title": "Champs",
-        "addField": "Ajouter un champ",
-        "empty": "Aucun champ pour cette étape.",
-        "remove": "Supprimer",
-        "removeConfirm": "Supprimer le champ « {{title}} » ?",
-        "selectField": "Sélectionnez un champ pour modifier ses propriétés.",
-        "editorTitle": "Paramètres du champ",
-        "label": "Libellé",
-        "name": "Nom technique",
+        "title": "Fields",
+        "addField": "Add a field",
+        "empty": "No fields yet.",
+        "remove": "Remove",
+        "removeConfirm": "Delete field \"{{title}}\"?",
+        "selectField": "Select a field to edit its properties.",
+        "editorTitle": "Field settings",
+        "label": "Field label",
+        "name": "Field name",
         "properties": {
-          "buttonType": "Action du bouton",
+          "buttonType": "Button action",
           "buttonTypeOptions": {
-            "button": "Bouton",
-            "submit": "Soumettre",
-            "reset": "Réinitialiser"
+            "button": "Button",
+            "submit": "Submit",
+            "reset": "Reset"
           },
-          "variant": "Variante",
+          "variant": "Variant",
           "variantOptions": {
-            "primary": "Primaire",
-            "secondary": "Secondaire",
+            "primary": "Primary",
+            "secondary": "Secondary",
             "danger": "Danger"
           },
-          "required": "Obligatoire",
-          "defaultChecked": "Coché par défaut",
-          "value": "Valeur",
+          "required": "Required",
+          "defaultChecked": "Checked by default",
+          "value": "Value",
           "placeholder": "Placeholder",
-          "defaultValue": "Valeur par défaut",
-          "defaultDate": "Date par défaut",
-          "minDate": "Date minimum",
-          "maxDate": "Date maximum",
-          "defaultDateTime": "Date & heure par défaut",
-          "minDateTime": "Date & heure minimum",
-          "maxDateTime": "Date & heure maximum",
-          "step": "Pas",
-          "list": "Valeurs de la liste de données",
-          "listAdd": "Ajouter une valeur",
-          "listRemove": "Supprimer la valeur",
-          "listItem": "Valeur {{index}}",
+          "defaultValue": "Default value",
+          "defaultDate": "Default date",
+          "minDate": "Minimum date",
+          "maxDate": "Maximum date",
+          "defaultDateTime": "Default date & time",
+          "minDateTime": "Minimum date & time",
+          "maxDateTime": "Maximum date & time",
+          "step": "Step",
+          "list": "Data list values",
+          "listAdd": "Add value",
+          "listRemove": "Remove value",
+          "listItem": "Value {{index}}",
           "pattern": "Pattern",
-          "minLength": "Longueur minimale",
-          "maxLength": "Longueur maximale",
-          "autocomplete": "Autocomplétion",
-          "multiple": "Autoriser plusieurs valeurs",
+          "minLength": "Minimum length",
+          "maxLength": "Maximum length",
+          "autocomplete": "Autocomplete",
+          "multiple": "Allow multiple values",
           "options": "Options",
-          "optionsAdd": "Ajouter une option",
-          "optionsRemove": "Supprimer l’option",
+          "optionsAdd": "Add option",
+          "optionsRemove": "Remove option",
           "optionsItem": "Option {{index}}",
-          "size": "Options visibles",
-          "disabled": "Désactivé",
-          "autofocus": "Focus automatique",
-          "accept": "Types MIME acceptés",
-          "rows": "Lignes",
-          "resize": "Comportement du redimensionnement",
+          "size": "Visible options",
+          "disabled": "Disabled",
+          "autofocus": "Auto focus",
+          "accept": "Accepted MIME types",
+          "rows": "Rows",
+          "resize": "Resize behaviour",
           "resizeOptions": {
-            "none": "Aucun",
-            "both": "Les deux",
+            "none": "None",
+            "both": "Both",
             "horizontal": "Horizontal",
             "vertical": "Vertical"
           },
-          "selectPlaceholder": "Sélectionner une option"
+          "selectPlaceholder": "Select an option"
         },
         "radioGroup": {
-          "optionsTitle": "Options radio",
-          "empty": "Aucune option pour le moment.",
-          "addOption": "Ajouter une option radio",
+          "optionsTitle": "Radio options",
+          "empty": "No radio options yet.",
+          "addOption": "Add radio option",
           "optionLabel": "Option {{index}}"
         },
         "checkboxGroup": {
-          "optionsTitle": "Options de cases à cocher",
-          "empty": "Aucune case pour le moment.",
-          "addOption": "Ajouter une case",
+          "optionsTitle": "Checkbox options",
+          "empty": "No checkbox options yet.",
+          "addOption": "Add checkbox",
           "optionLabel": "Option {{index}}"
         },
         "select": {
-          "optionsTitle": "Options de liste",
-          "empty": "Aucune option pour le moment.",
-          "addOption": "Ajouter une option",
-          "optionValueLabel": "Valeur",
+          "optionsTitle": "Select options",
+          "empty": "No select options yet.",
+          "addOption": "Add select option",
+          "optionValueLabel": "Value",
           "optionLabelLabel": "Label",
-          "optionSelected": "Sélectionnée",
+          "optionSelected": "Selected",
+          "optionLabel": "Option {{index}}"
+        },
+        "selectOption": {
+          "optionsTitle": "Select options",
+          "empty": "No options yet.",
+          "addOption": "Add select option",
+          "optionValueLabel": "Value",
+          "optionLabelLabel": "Label",
+          "optionSelected": "Selected",
           "optionLabel": "Option {{index}}"
         }
       },
       "preview": {
-        "title": "Aperçu JSON"
+        "title": "JSON preview"
+      }
+    },
+    "settings": {
+      "title": "Paramètres du formulaire",
+      "subtitle": "Configurer les propriétés et le comportement du formulaire",
+      "formNamePlaceholder": "Chargement du formulaire...",
+      "formSubtitle": "Configurer les paramètres et le comportement de ce formulaire",
+      "tabs": {
+        "basic": "Général",
+        "responses": "Messages",
+        "buttons": "Boutons",
+        "actions": "Actions",
+        "style": "Style"
+      },
+      "basic": {
+        "title": "Paramètres généraux",
+        "formTitle": "Titre du formulaire",
+        "formTitlePlaceholder": "Saisir le titre du formulaire",
+        "formTitleDescription": "Le titre principal affiché en haut de votre formulaire",
+        "intro": "Introduction",
+        "introPlaceholder": "Saisir l'introduction du formulaire",
+        "introDescription": "Texte d'introduction optionnel affiché au-dessus des champs du formulaire"
+      },
+      "responses": {
+        "title": "Messages de réponse",
+        "submissionMessage": "Message de succès",
+        "submissionMessagePlaceholder": "Message affiché après soumission réussie",
+        "submissionMessageDescription": "Message affiché aux utilisateurs lorsque leur soumission de formulaire est réussie",
+        "errorMessage": "Message d'erreur",
+        "errorMessagePlaceholder": "Message affiché en cas d'échec de soumission",
+        "errorMessageDescription": "Message affiché lorsqu'il y a des erreurs dans la soumission du formulaire"
+      },
+      "buttons": {
+        "title": "Paramètres des boutons",
+        "submitBtnLabel": "Libellé du bouton Soumettre",
+        "submitBtnLabelPlaceholder": "Soumettre",
+        "submitBtnLabelDescription": "Texte affiché sur le bouton de soumission principal",
+        "showResetBtn": "Afficher le bouton Réinitialiser",
+        "showResetBtnDescription": "Afficher un bouton pour effacer tous les champs du formulaire",
+        "resetBtnLabel": "Libellé du bouton Réinitialiser",
+        "resetBtnLabelPlaceholder": "Réinitialiser",
+        "showNewFormBtn": "Afficher le bouton Nouveau formulaire",
+        "showNewFormBtnDescription": "Afficher un bouton pour commencer une nouvelle soumission de formulaire",
+        "newFormBtnLabel": "Libellé du bouton Nouveau formulaire",
+        "newFormBtnLabelPlaceholder": "Nouveau formulaire",
+        "showTryAgainBtn": "Afficher le bouton Réessayer",
+        "showTryAgainBtnDescription": "Afficher un bouton pour réessayer la soumission après une erreur",
+        "tryAgainBtnLabel": "Libellé du bouton Réessayer",
+        "tryAgainBtnLabelPlaceholder": "Réessayer"
+      },
+      "actions": {
+        "title": "Paramètres d'action",
+        "customTarget": "URL de redirection personnalisée",
+        "customTargetPlaceholder": "Saisir l'URL de redirection après soumission",
+        "customTargetDescription": "URL vers laquelle rediriger les utilisateurs après une soumission réussie (laisser vide pour le comportement par défaut)"
+      },
+      "style": {
+        "title": "Styles personnalisés",
+        "css": "CSS personnalisé",
+        "cssPlaceholder": "Saisir le CSS personnalisé pour le formulaire",
+        "cssDescription": "Ajouter des styles CSS personnalisés pour personnaliser l'apparence de votre formulaire"
       }
     },
     "fields": {
       "types": {
-        "inputButton": "Bouton",
-        "inputCheckbox": "Case à cocher",
-        "checkboxGroup": "Groupe de cases",
-        "inputColor": "Couleur",
+        "inputButton": "Button",
+        "inputCheckbox": "Checkbox",
+        "checkboxGroup": "Checkbox group",
+        "inputColor": "Color",
         "inputDate": "Date",
-        "inputDatetimeLocal": "Date/heure",
-        "inputEmail": "E-mail",
-        "inputFile": "Fichier",
-        "inputHidden": "Caché",
-        "inputRadio": "Option radio",
-        "radioGroup": "Groupe radio",
-        "inputText": "Texte",
-        "select": "Liste",
-        "textarea": "Zone de texte"
+        "inputDatetimeLocal": "Date/time",
+        "inputEmail": "Email",
+        "inputFile": "File upload",
+        "inputHidden": "Hidden",
+        "inputRadio": "Radio option",
+        "radioGroup": "Radio group",
+        "inputText": "Text",
+        "select": "Select",
+        "textarea": "Textarea"
       }
     }
   }

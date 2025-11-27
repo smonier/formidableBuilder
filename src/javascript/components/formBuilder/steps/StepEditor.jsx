@@ -5,22 +5,8 @@ import {DndContext, PointerSensor, useSensor, useSensors} from '@dnd-kit/core';
 import {SortableContext, arrayMove, useSortable, verticalListSortingStrategy} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import {useTranslation} from 'react-i18next';
-import {FIELD_TYPES, FORM_NAMESPACE} from '../../../constants/formBuilder';
-import {
-    Calendar,
-    CheckboxChecked,
-    CloudUpload,
-    Clock,
-    Follow,
-    Rocket,
-    MultipleListSelector,
-    Hidden,
-    ListSelection,
-    Palette,
-    Paragraph,
-    RadioChecked,
-    Text as TextIcon
-} from '@jahia/moonstone/dist/icons';
+import {FORM_NAMESPACE} from '../../../constants/formBuilder';
+import {FieldPreview} from '../fields/FieldPreview';
 
 const FieldRow = ({field, isActive, onSelect, onRemove}) => {
     const {t} = useTranslation(FORM_NAMESPACE);
@@ -38,10 +24,13 @@ const FieldRow = ({field, isActive, onSelect, onRemove}) => {
             {...attributes}
             {...listeners}
         >
-            <button type="button" className="fb-field-row__button" onClick={() => onSelect(field.id)}>
-                <Typography variant="body" weight="bold">{field.label || field.name}</Typography>
-                <Typography variant="caption">{field.type}</Typography>
-            </button>
+            <div className="fb-field-row__content">
+                <button type="button" className="fb-field-row__button" onClick={() => onSelect(field.id)}>
+                    <Typography variant="body" weight="bold">{field.label || field.name}</Typography>
+                    <Typography variant="caption">{field.type}</Typography>
+                </button>
+                <FieldPreview field={field}/>
+            </div>
             <Button label={t('builder.fields.remove')} onClick={() => onRemove(field.id)}/>
         </li>
     );
@@ -59,26 +48,9 @@ FieldRow.propTypes = {
     onRemove: PropTypes.func.isRequired
 };
 
-const FIELD_TYPE_ICONS = {
-    inputButton: Follow,
-    inputCheckbox: CheckboxChecked,
-    checkboxGroup: MultipleListSelector,
-    inputColor: Palette,
-    inputDate: Calendar,
-    inputDatetimeLocal: Clock,
-    inputEmail: Rocket,
-    inputFile: CloudUpload,
-    inputHidden: Hidden,
-    radioGroup: RadioChecked,
-    inputText: TextIcon,
-    select: ListSelection,
-    textarea: Paragraph
-};
-
 export const StepEditor = ({
     step,
     onUpdateStep,
-    onAddField,
     onRemoveField,
     onSelectField,
     onReorderFields,
@@ -131,23 +103,6 @@ export const StepEditor = ({
                 </label>
             </div>
 
-            <div className="fb-step-editor__actions">
-                <Typography variant="subheading">{t('builder.fields.addField')}</Typography>
-                <div className="fb-field-type-grid">
-                    {FIELD_TYPES.filter(type => !type.allowedParents || type.allowedParents.includes('step')).map(type => {
-                        const IconComponent = FIELD_TYPE_ICONS[type.id];
-                        return (
-                            <Button
-                                key={type.id}
-                                label={t(`fields.types.${type.id}`)}
-                                icon={IconComponent ? <IconComponent size="small"/> : null}
-                                onClick={() => onAddField(step.id, type.id)}
-                            />
-                        );
-                    })}
-                </div>
-            </div>
-
             <div className="fb-step-editor__list">
                 <Typography variant="subheading">{t('builder.fields.title')}</Typography>
                 {step.fields.length === 0 && (
@@ -184,7 +139,6 @@ StepEditor.propTypes = {
         fields: PropTypes.array
     }),
     onUpdateStep: PropTypes.func.isRequired,
-    onAddField: PropTypes.func.isRequired,
     onRemoveField: PropTypes.func.isRequired,
     onSelectField: PropTypes.func.isRequired,
     onReorderFields: PropTypes.func.isRequired,

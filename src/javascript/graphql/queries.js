@@ -13,11 +13,30 @@ export const GET_FORMS_LIST = gql`
                     properties(language: $language, names: ["intro", "jcr:lastModified"]) {
                         ...PropertyFields
                     }
-                    children(names: ["fieldsets"]) {
+                    children {
                         nodes {
+                            uuid
+                            name
+                            path
+                            primaryNodeType {
+                                name
+                            }
+                            properties(language: $language, names: ["jcr:lastModified"]) {
+                                ...PropertyFields
+                            }
                             children {
                                 nodes {
                                     uuid
+                                    properties(language: $language, names: ["jcr:lastModified"]) {
+                                        ...PropertyFields
+                                    }
+                                    children {
+                                        nodes {
+                                            properties(language: $language, names: ["jcr:lastModified"]) {
+                                                ...PropertyFields
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
