@@ -149,6 +149,24 @@ export const normalizeForm = node => {
     const title = getPropertyValue(node.properties || [], 'jcr:title') || node.displayName || node.name;
     const properties = propertiesToObject(node.properties || []);
 
+    // Debug CSS from properties array
+    console.log('normalizeForm - css from properties array:', properties.css);
+    // Handle CSS as string if it's an array
+    if (Array.isArray(properties.css)) {
+        properties.css = properties.css.join('');
+        console.log('normalizeForm - css joined from array:', properties.css);
+    }
+
+    // Add CSS from explicit property query if available (fallback)
+    if (node.cssProperty) {
+        console.log('normalizeForm - cssProperty:', node.cssProperty);
+        console.log('normalizeForm - cssProperty.value:', node.cssProperty.value);
+        console.log('normalizeForm - cssProperty.values:', node.cssProperty.values);
+        const cssValue = node.cssProperty.value || (node.cssProperty.values ? node.cssProperty.values.join('') : '');
+        properties.css = cssValue;
+        console.log('normalizeForm - final css:', properties.css);
+    }
+
     const directStepNodes = ((node.children || {}).nodes || []).filter(isFieldsetNode);
     const containerNodes = ((node.fieldsetsContainers || {}).nodes || []);
     const containerStepNodes = containerNodes.flatMap(container => ((container.children || {}).nodes || []).filter(isFieldsetNode));

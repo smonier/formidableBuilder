@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {useHistory, useLocation} from 'react-router';
-import {Button, LayoutContent, Typography, Header, Paper, Input, Textarea, Switch} from '@jahia/moonstone';
+import {Button, LayoutContent, Typography, Header, Paper, Input, Textarea, Switch, Dropdown} from '@jahia/moonstone';
 import {ChevronLeft} from '@jahia/moonstone/dist/icons';
 import {useTranslation} from 'react-i18next';
 import {useQuery, useMutation} from '@apollo/client';
@@ -12,7 +12,7 @@ import {FORMAT_TEXT_COMMAND} from 'lexical';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import {$generateHtmlFromNodes, $generateNodesFromDOM} from '@lexical/html';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {$getRoot, $createTextNode, $createParagraphNode} from 'lexical';
+import {$getRoot, $createTextNode, $createParagraphNode, $getSelection} from 'lexical';
 import {FORM_NAMESPACE} from '../../constants/formBuilder';
 import {useFormBuilderContext} from '../../contexts/FormBuilderContext';
 import {GET_FORM_DETAILS} from '../../graphql/queries';
@@ -20,12 +20,27 @@ import {UPDATE_FORM_METADATA_MUTATION, UPDATE_FORM_MIXIN_RESPONSES_MUTATION, UPD
 import './FormSettings.scss';
 
 // Simple Toolbar Component
-const Toolbar = () => {
+const Toolbar = ({formFields = []}) => {
     const [editor] = useLexicalComposerContext();
 
     const formatText = formatType => {
         editor.dispatchCommand(FORMAT_TEXT_COMMAND, formatType);
     };
+
+    const insertFieldVariable = fieldName => {
+        editor.update(() => {
+            const selection = $getSelection();
+            if (selection) {
+                const textNode = $createTextNode(`\${${fieldName}}`);
+                selection.insertNodes([textNode]);
+            }
+        });
+    };
+
+    const fieldOptions = formFields.map(field => ({
+        label: field.displayName || field.name,
+        value: field.name
+    }));
 
     return (
         <div className="lexical-toolbar">
@@ -53,8 +68,24 @@ const Toolbar = () => {
             >
                 <u>U</u>
             </button>
+            {formFields.length > 0 && (
+                <div className="lexical-toolbar-select">
+                    <Dropdown
+                        data={fieldOptions}
+                        placeholder="Insert field variable"
+                        onChange={(event, item) => insertFieldVariable(item.value)}
+                    />
+                </div>
+            )}
         </div>
     );
+};
+
+Toolbar.propTypes = {
+    formFields: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        displayName: PropTypes.string
+    }))
 };
 
 const ContentSetterPlugin = ({value}) => {
@@ -154,7 +185,7 @@ ChangeHandlerPlugin.propTypes = {
 };
 
 // Lexical Editor Component with minimal toolbar
-const LexicalEditor = ({value, onChange, placeholder, height = 120}) => {
+const LexicalEditor = ({value, onChange, placeholder, height = 120, formFields = []}) => {
     console.log('LexicalEditor: rendering with value:', value, 'type:', typeof value);
 
     const initialConfig = {
@@ -165,7 +196,7 @@ const LexicalEditor = ({value, onChange, placeholder, height = 120}) => {
     return (
         <div className="lexical-editor" style={{minHeight: height}}>
             <LexicalComposer initialConfig={initialConfig}>
-                <Toolbar/>
+                <Toolbar formFields={formFields}/>
                 <RichTextPlugin
                     contentEditable={
                         <ContentEditable
@@ -187,22 +218,26 @@ LexicalEditor.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
-    height: PropTypes.number
+    height: PropTypes.number,
+    formFields: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        displayName: PropTypes.string
+    }))
 };
 
 export const FormSettings = ({match}) => {
     const {t} = useTranslation(FORM_NAMESPACE);
     const history = useHistory();
     const location = useLocation();
-    const {workspace} = useFormBuilderContext();
+    const {workspace, language} = useFormBuilderContext();
     const formId = match.params.formId;
     const basePath = match?.url ? match.url.replace(/\/[^/]+$/, '') : '/form-builder';
 
-    // Use the same query as FormBuilder but with English to get properties
+    // Use the same query as FormBuilder but with the context language
     const {data, loading} = useQuery(GET_FORM_DETAILS, {
         variables: {
             workspace,
-            language: 'en', // Use English to get the properties
+            language, // Use context language
             uuid: formId
         },
         fetchPolicy: 'no-cache',
@@ -225,6 +260,9 @@ export const FormSettings = ({match}) => {
         customTarget: '',
         css: ''
     });
+
+    // Form fields state
+    const [formFields, setFormFields] = useState([]);
 
     // Active tab state
     const [activeTab, setActiveTab] = useState('basic');
@@ -268,8 +306,31 @@ export const FormSettings = ({match}) => {
                 css: getPropertyValue('css') || ''
             };
 
+            // Extract form fields from steps
+            const extractFields = node => {
+                const fields = [];
+                const children = node.children?.nodes || [];
+                children.forEach(step => {
+                    if (step.children?.nodes) {
+                        step.children.nodes.forEach(field => {
+                            if (field.name) {
+                                fields.push({
+                                    name: field.name,
+                                    displayName: field.displayName || field.name
+                                });
+                            }
+                        });
+                    }
+                });
+                return fields;
+            };
+
+            const fields = extractFields(node);
+
             console.log('FormSettings: loaded formData:', newFormData);
+            console.log('FormSettings: loaded formFields:', fields);
             setFormData(newFormData);
+            setFormFields(fields);
         }
     }, [data]);
 
@@ -281,52 +342,54 @@ export const FormSettings = ({match}) => {
                 variables: {
                     workspace: 'EDIT',
                     pathOrId: formId,
-                    language: 'en',
+                    language,
                     title: formData.title,
                     intro: formData.intro
                 }
             });
 
-            // Save mixin properties
-            await Promise.all([
-                updateResponses({
-                    variables: {
-                        workspace: 'EDIT',
-                        pathOrId: formId,
-                        language: 'en',
-                        submissionMessage: formData.submissionMessage,
-                        errorMessage: formData.errorMessage
-                    }
-                }),
-                updateButtons({
-                    variables: {
-                        workspace: 'EDIT',
-                        pathOrId: formId,
-                        language: 'en',
-                        submitBtnLabel: formData.submitBtnLabel,
-                        resetBtnLabel: formData.resetBtnLabel,
-                        showResetBtn: formData.showResetBtn.toString(),
-                        newFormBtnLabel: formData.newFormBtnLabel,
-                        showNewFormBtn: formData.showNewFormBtn.toString(),
-                        tryAgainBtnLabel: formData.tryAgainBtnLabel,
-                        showTryAgainBtn: formData.showTryAgainBtn.toString()
-                    }
-                }),
-                updateActions({
-                    variables: {
-                        workspace: 'EDIT',
-                        pathOrId: formId,
-                        customTarget: formData.customTarget
-                    }
-                }),
-                updateStyle({
-                    variables: {
-                        workspace: 'EDIT',
-                        pathOrId: formId,
-                        css: formData.css
-                    }
-                })
-            ]);
+            // Save mixin properties sequentially to avoid JCR conflicts
+            await updateResponses({
+                variables: {
+                    workspace: 'EDIT',
+                    pathOrId: formId,
+                    language: 'en',
+                    submissionMessage: formData.submissionMessage,
+                    errorMessage: formData.errorMessage
+                }
+            });
+
+            await updateButtons({
+                variables: {
+                    workspace: 'EDIT',
+                    pathOrId: formId,
+                    language: 'en',
+                    submitBtnLabel: formData.submitBtnLabel,
+                    resetBtnLabel: formData.resetBtnLabel,
+                    showResetBtn: formData.showResetBtn.toString(),
+                    newFormBtnLabel: formData.newFormBtnLabel,
+                    showNewFormBtn: formData.showNewFormBtn.toString(),
+                    tryAgainBtnLabel: formData.tryAgainBtnLabel,
+                    showTryAgainBtn: formData.showTryAgainBtn.toString()
+                }
+            });
+
+            await updateActions({
+                variables: {
+                    workspace: 'EDIT',
+                    pathOrId: formId,
+                    customTarget: formData.customTarget
+                }
+            });
+
+            await updateStyle({
+                variables: {
+                    workspace: 'EDIT',
+                    pathOrId: formId,
+                    language,
+                    css: formData.css
+                }
+            });
         } catch (error) {
             console.error('Error saving form settings:', error);
         } finally {
@@ -385,6 +448,7 @@ export const FormSettings = ({match}) => {
                     value={formData.intro}
                     placeholder={t('settings.basic.introPlaceholder')}
                     height={120}
+                    formFields={formFields}
                     onChange={value => handleInputChange('intro', value)}
                 />
             </div>
@@ -395,24 +459,32 @@ export const FormSettings = ({match}) => {
         <div className="fs-settings__section">
             <Typography variant="heading" level={3}>{t('settings.responses.title')}</Typography>
             <div className="fs-settings__field">
-                <Typography variant="body" className="fs-settings__field-description">
-                    {t('settings.responses.submissionMessageDescription')}
-                </Typography>
+                {/* eslint-disable react/no-danger */}
+                <div
+                    dangerouslySetInnerHTML={{__html: t('settings.responses.submissionMessageDescription')}}
+                    className="fs-settings__field-description"
+                />
+                {/* eslint-enable react/no-danger */}
                 <LexicalEditor
                     value={formData.submissionMessage}
                     placeholder={t('settings.responses.submissionMessagePlaceholder')}
                     height={100}
+                    formFields={formFields}
                     onChange={value => handleInputChange('submissionMessage', value)}
                 />
             </div>
             <div className="fs-settings__field">
-                <Typography variant="body" className="fs-settings__field-description">
-                    {t('settings.responses.errorMessageDescription')}
-                </Typography>
+                {/* eslint-disable react/no-danger */}
+                <div
+                    dangerouslySetInnerHTML={{__html: t('settings.responses.errorMessageDescription')}}
+                    className="fs-settings__field-description"
+                />
+                {/* eslint-enable react/no-danger */}
                 <LexicalEditor
                     value={formData.errorMessage}
                     placeholder={t('settings.responses.errorMessagePlaceholder')}
                     height={100}
+                    formFields={formFields}
                     onChange={value => handleInputChange('errorMessage', value)}
                 />
             </div>

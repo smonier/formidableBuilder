@@ -193,10 +193,10 @@
         "title": "Response Messages",
         "submissionMessage": "Success Message",
         "submissionMessagePlaceholder": "Message shown after successful submission",
-        "submissionMessageDescription": "Message displayed to users when their form submission is successful",
+        "submissionMessageDescription": "Message displayed when form is successfully submitted.<br/><b>Variables:</b> <i>Use ${fieldName} to insert form field values</i>.<br/><b>Example:</b> <i>Thank you ${firstname}, your message has been sent!</i>.<br/><b>Note:</b> <i>Field names match the system-name of form elements. Empty fields show as blank in message. Use required fields for guaranteed values</i>.",
         "errorMessage": "Error Message",
         "errorMessagePlaceholder": "Message shown when submission fails",
-        "errorMessageDescription": "Message displayed when there are errors in form submission"
+        "errorMessageDescription": "Message displayed when form submission fails or encounters an error.<br/><b>Variables:</b> <i>Use ${fieldName} to insert form field values</i>.<br/><b>Example:</b> <i>Sorry ${firstname}, there was an error processing your request</i>.<br/><b>Note:</b> <i>Field names match the system-name of form elements. Empty fields show as blank in message. Use required fields for guaranteed values</i>."
       },
       "buttons": {
         "title": "Button Settings",
@@ -226,7 +226,7 @@
         "title": "Custom Styles",
         "css": "Custom CSS",
         "cssPlaceholder": "Enter custom CSS for the form",
-        "cssDescription": "Add custom CSS styles to customize the appearance of your form"
+        "cssDescription": "Add custom CSS styles to customize the appearance of your form (no comments allowed)"
       }
     },
     "fields": {
